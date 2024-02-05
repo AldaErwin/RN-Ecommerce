@@ -9,7 +9,6 @@ const CategoryItem = ({ category, navigation }) => {
 
     return (
         <TouchableOpacity onPress={()=>{
-            navigation.navigate("products",{category})
             dispatch(setCategorySelected(category))
             }
             }>
@@ -27,6 +26,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         padding: 20,
         margin: 10,
+        height:80
     },
     text: {
         textTransform: 'capitalize',

@@ -1,6 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
 import { useDispatch } from 'react-redux'
 import { setProductIdSelected, setProductSelected } from '../features/shopSlice'
+import { colors } from '../global/colors'
 
 const ProductItem = ({product, navigation}) => {
 
@@ -33,8 +34,12 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         padding:10,
         margin:10,
+        borderBottomWidth:1,
+        borderBottomColor:colors.primary
     },
-    productTitle:{},
+    productTitle:{
+        alignSelf:"center"
+    },
     productImage:{
         width:60,
         height:60,
