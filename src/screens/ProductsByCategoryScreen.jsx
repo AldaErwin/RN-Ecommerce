@@ -29,7 +29,6 @@ const ProductsByCategoryScreen = ({navigation, route}) => {
             product=>product.title.toLowerCase().includes(search.toLowerCase()))
             setProductsByCategory(productsFiltered)
         }
-        
     },[isLoading,category, search])
 
     const renderProductItem = ({item}) => (
