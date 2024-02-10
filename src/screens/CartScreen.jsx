@@ -5,6 +5,7 @@ import { colors } from '../global/colors'
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { usePostOrderMutation } from '../services/shopService';
+import { clearCart } from '../features/cartSlice';
 
 const CartScreen = ({navigation}) => {
 
@@ -26,6 +27,7 @@ const CartScreen = ({navigation}) => {
       triggerPost({total,cartItems,user:"LoggedUser" })
       //navigation.navigate("categories")
     }
+    
 
     const renderCartItem = ({item}) => (
         <CartItem item={item} />
@@ -42,6 +44,9 @@ const CartScreen = ({navigation}) => {
                 <Text style={styles.totalPrice}>Total: USD {total}</Text>
                 <TouchableOpacity style={styles.confirmButton} onPress={confirmCart}>
                     <Text style={styles.textConfirm}>Confirmar</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.clearButton} onPress={clearCart}>
+                    <Text style={styles.textConfirm}>Vaciar Carrito</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -67,6 +72,11 @@ const styles = StyleSheet.create({
     },
     confirmButton:{
       backgroundColor: colors.secondary,
+      padding:10,
+      borderRadius:10,
+    },
+    clearButton:{
+      backgroundColor: colors.clear,
       padding:10,
       borderRadius:10,
     },

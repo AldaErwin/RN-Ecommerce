@@ -3,6 +3,7 @@ export const colors = {
     primaryBack: "#D6CBC1",
     secondary: '#1E150C',
     gray: '#ccc',
-    success: "#00A878"
+    success: "#00A878",
+    clear:"#d11a2a"
 }
 

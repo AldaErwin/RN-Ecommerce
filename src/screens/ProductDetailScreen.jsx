@@ -45,7 +45,6 @@ const ProductDetailScreen = ({route}) => {
         <ActivityIndicator />
         :
         <>
-        {/* <Header title="Detalle del producto"/> */}
             <ScrollView >
               <Image
                 source={{ uri: productSelected.images[0] }}

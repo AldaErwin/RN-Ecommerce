@@ -2,12 +2,18 @@ import { View, Text,StyleSheet,Image, TouchableOpacity } from 'react-native'
 import Card from './Card'
 import { colors } from '../global/colors'
 import {  Feather } from '@expo/vector-icons'; 
+import { removeItem } from '../features/cartSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 
 const CartItem = ({item}) => {
 
-    
+    const productSelected = useSelector(state=>state.shopReducer.productSelected)
+    const dispatch = useDispatch()
+    const onRemoveCart = () =>{
+        dispatch(removeItem({...productSelected, quantity: 1}))
+      }
 
     return (
       <Card style={styles.cartItemContainer}>
@@ -24,7 +30,7 @@ const CartItem = ({item}) => {
                   Cantidad: {item.quantity}, Total: ${item.price*item.quantity}
               </Text>
           </View>
-          <TouchableOpacity style={styles.trashCart} onPress={null}>
+          <TouchableOpacity style={styles.trashCart} onPress={onRemoveCart}>
               <Feather name="trash" size={24} color="black" />
           </TouchableOpacity>
       </Card>

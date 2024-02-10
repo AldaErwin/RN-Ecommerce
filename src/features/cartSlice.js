@@ -42,16 +42,52 @@ export const cartSlice = createSlice({
                 }
             }
         },
-        removeItem: (state, action)=>{
-            //Tarea para el hogar
+            removeItem:(state, action) => {
+            const itemIndex = state.items.findIndex(item => item.id === action.payload.id);
+        
+            if (itemIndex !== -1) {
+                const updatedItems = [...state.items];
+                const itemToUpdate = updatedItems[itemIndex];
+        
+                if (itemToUpdate.quantity > 0) {
+                    if (itemToUpdate.quantity === 1) {
+                        updatedItems.splice(itemIndex, 1);
+                    } else {
+                        updatedItems[itemIndex] = {
+                            ...itemToUpdate,
+                            quantity: itemToUpdate.quantity - 1
+                        };
+                    }
+                }
+        
+                const total = updatedItems.reduce(
+                    (acc, current) => acc + current.price * current.quantity,
+                    0
+                );
+        
+                return {
+                    ...state,
+                    items: updatedItems,
+                    total,
+                    updatedAt: Date.now().toLocaleString()
+                };
+            }
+        }
+        
+        
+            
         },
-        /* clearCart: (state) => {
-            state.items = [],
-            state.total = 0
-        } */
+        clearCart: (state) => {
+            // Crea un nuevo estado con el carrito vacío
+            return {
+                ...state,
+                items: [],
+                total: 0
+            };
+        }
     }
-})
+)
 
-export const {addItem, removeItem} = cartSlice.actions
+export const {addItem, removeItem,clearCart} = cartSlice.actions
 
 export default cartSlice.reducer

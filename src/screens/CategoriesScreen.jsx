@@ -20,7 +20,6 @@ const CategoriesScreen = ({ navigation }) => {
     const {data: productsFilteredByCategory} = useGetProductsByCategoryQuery(category)
 
     useEffect(()=>{
-        //const productsFilteredByCategory = products_data.filter(product=>product.category===category)
         if(!isLoading){
             const productsValues = Object.values(productsFilteredByCategory)
             const productsFiltered = productsValues.filter(

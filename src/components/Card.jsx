@@ -12,11 +12,6 @@ export default Card
 
 const styles = StyleSheet.create({
     container: {
-        shadowColor: '#000',
-        shadowOffset: {
-            height: 10,
-            width: 10,
-        },
-        
+
     }
 })
