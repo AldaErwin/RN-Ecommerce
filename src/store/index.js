@@ -5,9 +5,11 @@ import { shopApi } from "../services/shopService";
 import { authApi } from "../services/authService";
 import cartReducer from "../features/cartSlice";
 import authReducer from "../features/authSlice";
+import counterReducer from "../features/counterSlice";
 
 const store = configureStore({
     reducer: {
+        counterReducer,
         shopReducer,
         cartReducer,
         authReducer,

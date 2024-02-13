@@ -10,6 +10,8 @@ const ProductsByCategoryScreen = ({navigation, route}) => {
     const [productsByCategory, setProductsByCategory] = useState([])
     const [search, setSearch] = useState('')
     const category = useSelector(state=>state.shopReducer.categorySelected)
+
+
     const {data: productsFilteredByCategory, isLoading, error} = useGetProductsByCategoryQuery(category)
 
     useEffect(()=>{
@@ -19,6 +21,7 @@ const ProductsByCategoryScreen = ({navigation, route}) => {
             product=>product.title.toLowerCase().includes(search.toLowerCase()))
             setProductsByCategory(productsFiltered)
         }
+        
     },[isLoading,category, search])
 
     const renderProductItem = ({item}) => (

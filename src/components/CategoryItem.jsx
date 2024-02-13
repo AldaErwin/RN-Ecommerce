@@ -9,6 +9,7 @@ const CategoryItem = ({ category, navigation }) => {
 
     return (
         <TouchableOpacity onPress={()=>{
+            navigation.navigate("products",{category})
             dispatch(setCategorySelected(category))
             }
             }>
@@ -24,7 +25,8 @@ export default CategoryItem
 const styles = StyleSheet.create({
     cardContainer: {
         backgroundColor: "#fff",
-        padding: 20,
+        justifyContent:"center",
+        alignItems:"center",
         margin: 10,
         height:80
     },

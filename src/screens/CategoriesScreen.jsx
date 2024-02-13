@@ -1,64 +1,33 @@
-import { View, Text, StyleSheet, FlatList, Image,ActivityIndicator } from "react-native";
-import CategoryItem from "../components/CategoryItem";
-import { useSelector } from "react-redux";
-import { useGetCategoriesQuery } from "../services/shopService";
-import ProductItem from '../components/ProductItem'
-import { useState, useEffect } from 'react'
-import { useGetProductsByCategoryQuery } from '../services/shopService'
+import {StyleSheet, FlatList, Image} from 'react-native'
+import CategoryItem from '../components/CategoryItem'
+import { useGetCategoriesQuery } from '../services/shopService'
 
+const CategoriesScreen = ({navigation}) => {
 
-const CategoriesScreen = ({ navigation }) => {
-  const { data, isLoading, error } = useGetCategoriesQuery();
+    const {data, isLoading, error} = useGetCategoriesQuery()
 
-  const renderCategoryItem = ({ item }) => (
-    <CategoryItem category={item} />
-  );
-
-  const [productsByCategory, setProductsByCategory] = useState([])
-    const [search, setSearch] = useState('')
-    const category = useSelector(state=>state.shopReducer.categorySelected)
-    const {data: productsFilteredByCategory} = useGetProductsByCategoryQuery(category)
-
-    useEffect(()=>{
-        if(!isLoading){
-            const productsValues = Object.values(productsFilteredByCategory)
-            const productsFiltered = productsValues.filter(
-            product=>product.title.toLowerCase().includes(search.toLowerCase()))
-            setProductsByCategory(productsFiltered)
-        }
-    },[isLoading,category, search])
-
-    const renderProductItem = ({item}) => (
-        <ProductItem product={item} navigation={navigation}  />
+    const renderCategoryItem = ({item}) => (
+        <CategoryItem category={item} navigation={navigation} />
     )
 
-  return (
-    <>
-      <Image
+    return(
+        <>
+          <Image
         source={require("../../assets/img/logo1.avif")}
         resizeMode="cover"
         style={styles.imageCompany}
       />
-    
-      <FlatList
-        style={styles.categories}
-        data={data}
-        renderItem={renderCategoryItem}
-        keyExtractor={(item) => item}
-        horizontal={true}
+        <FlatList style={styles.categories}
+            data={data}
+            renderItem={renderCategoryItem}
+            keyExtractor={item=>item}
         />
-        <FlatList
-        style={styles.Categories2}
-        data={productsByCategory}
-        renderItem={renderProductItem}
-        keyExtractor={(item) => item.id}
+        
+        </>
+    )
+}
 
-      />
-    </>
-  );
-};
-
-export default CategoriesScreen;
+export default CategoriesScreen
 
 const styles = StyleSheet.create({
   categories: {

@@ -24,7 +24,7 @@ export const cartSlice = createSlice({
                 }
             }else{
                 const itemsUpdated = state.items.map(item=>{
-                    if(item.id===action.payload.id){
+                    if(item.id===action.payload.id && action.payload.quantity != 0){
                         item.quantity+=action.payload.quantity
                         return item
                     }
@@ -42,29 +42,27 @@ export const cartSlice = createSlice({
                 }
             }
         },
-            removeItem:(state, action) => {
+        removeItem: (state, action) => {
             const itemIndex = state.items.findIndex(item => item.id === action.payload.id);
-        
+
             if (itemIndex !== -1) {
                 const updatedItems = [...state.items];
                 const itemToUpdate = updatedItems[itemIndex];
-        
-                if (itemToUpdate.quantity > 0) {
-                    if (itemToUpdate.quantity === 1) {
-                        updatedItems.splice(itemIndex, 1);
-                    } else {
-                        updatedItems[itemIndex] = {
-                            ...itemToUpdate,
-                            quantity: itemToUpdate.quantity - 1
-                        };
-                    }
+
+                if (itemToUpdate.quantity > 1) {
+                    updatedItems[itemIndex] = {
+                        ...itemToUpdate,
+                        quantity: itemToUpdate.quantity - action.payload.quantity
+                    };
+                } else {
+                    updatedItems.splice(itemIndex, 1);
                 }
-        
+
                 const total = updatedItems.reduce(
                     (acc, current) => acc + current.price * current.quantity,
                     0
                 );
-        
+
                 return {
                     ...state,
                     items: updatedItems,
@@ -72,20 +70,17 @@ export const cartSlice = createSlice({
                     updatedAt: Date.now().toLocaleString()
                 };
             }
-        }
-        
-        
-            
         },
         clearCart: (state) => {
-            // Crea un nuevo estado con el carrito vacío
             return {
                 ...state,
                 items: [],
-                total: 0
+                total: 0,
+                updatedAt: Date.now().toLocaleString()
             };
         }
     }
+}
 )
 
 export const {addItem, removeItem,clearCart} = cartSlice.actions

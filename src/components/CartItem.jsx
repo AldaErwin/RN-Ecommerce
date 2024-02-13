@@ -8,12 +8,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 
 const CartItem = ({item}) => {
-
-    const productSelected = useSelector(state=>state.shopReducer.productSelected)
     const dispatch = useDispatch()
     const onRemoveCart = () =>{
-        dispatch(removeItem({...productSelected, quantity: 1}))
-      }
+        dispatch(removeItem({...item, quantity: 1}))
+    }
 
     return (
       <Card style={styles.cartItemContainer}>
@@ -72,3 +70,4 @@ const CartItem = ({item}) => {
           color:colors.primary,
       }
   })
+

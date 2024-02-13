@@ -3,32 +3,27 @@ import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native
 import CartItem from '../components/CartItem'
 import { colors } from '../global/colors'
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { usePostOrderMutation } from '../services/shopService';
 import { clearCart } from '../features/cartSlice';
 
 const CartScreen = ({navigation}) => {
-
-    /* const [total, setTotal] = useState()
-
-    useEffect(()=>{
-        const totalCart = cart_data.reduce((accumulator, currentItem)=>(
-            accumulator+=currentItem.price*currentItem.quantity
-        ),0)
-        setTotal(totalCart)
-    },[]) */
-
+    
+    const user = useSelector(state=>state.authReducer.user)
     const cartItems = useSelector(state=>state.cartReducer.items)
     const total = useSelector(state=>state.cartReducer.total)
     const [triggerPost, result] =  usePostOrderMutation()
 
+    const dispatch = useDispatch()
+    const clearCartSet = ()=>{
+      dispatch(clearCart())
+    }
     const confirmCart = ()=>{
-      //console.log(result)
-      triggerPost({total,cartItems,user:"LoggedUser" })
-      //navigation.navigate("categories")
+      triggerPost({total,cartItems,user:user })
+      navigation.navigate("Categorías")
+      clearCartSet()
     }
     
-
     const renderCartItem = ({item}) => (
         <CartItem item={item} />
     )
@@ -45,7 +40,7 @@ const CartScreen = ({navigation}) => {
                 <TouchableOpacity style={styles.confirmButton} onPress={confirmCart}>
                     <Text style={styles.textConfirm}>Confirmar</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.clearButton} onPress={clearCart}>
+                <TouchableOpacity style={styles.clearButton} onPress={clearCartSet}>
                     <Text style={styles.textConfirm}>Vaciar Carrito</Text>
                 </TouchableOpacity>
             </View>
