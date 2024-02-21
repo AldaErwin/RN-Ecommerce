@@ -1,11 +1,12 @@
-import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View, Image, FlatList } from 'react-native'
 import React from 'react'
 import Card from './Card'
 import { Feather } from '@expo/vector-icons';
 
-const OrderItem = ({ order, setOrderId, setmodalVisible}) => {
+const OrderItemShow = ({ order, setOrderId}) => {
     let date = new Date(order.createAt)
     date = date.toLocaleString()
+    setOrderId(order.orderId)
     return (
         <Card style={styles.cartItemContainer}>
             <View >
@@ -14,18 +15,11 @@ const OrderItem = ({ order, setOrderId, setmodalVisible}) => {
                 </Text>
                 <Text style={styles.total}>Total: ${order.total}</Text>
             </View>
-            <TouchableOpacity style={styles.searchIcon} onPress={()=>{
-                setOrderId(order.orderId)
-                setmodalVisible(true)
-            }
-                }>
-                <Feather name="search" size={24} color="black" />
-            </TouchableOpacity>
         </Card>
     )
 }
 
-export default OrderItem
+export default OrderItemShow
 
 const styles = StyleSheet.create({
     cartItemContainer: {

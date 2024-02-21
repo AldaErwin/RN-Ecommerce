@@ -12,6 +12,9 @@ const CartScreen = ({navigation}) => {
     const user = useSelector(state=>state.authReducer.user)
     const cartItems = useSelector(state=>state.cartReducer.items)
     const total = useSelector(state=>state.cartReducer.total)
+    const localId = useSelector(state=>state.authReducer.localId)
+
+
     const [triggerPost, result] =  usePostOrderMutation()
 
     const dispatch = useDispatch()
@@ -19,7 +22,8 @@ const CartScreen = ({navigation}) => {
       dispatch(clearCart())
     }
     const confirmCart = ()=>{
-      triggerPost({total,cartItems,user:user })
+      const createAt = Date.now()
+      triggerPost({total,cartItems,localId:localId,user:user, createAt: createAt, orderId: Math.ceil(Math.random(1,10)*1000)})
       navigation.navigate("Categorías")
       clearCartSet()
     }
